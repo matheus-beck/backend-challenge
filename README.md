@@ -46,18 +46,19 @@ yarn test
   - Response:
     - Status 200 - JSON containing all rules
 - `POST /rules`:
+
   - Description: Creates a new availability rule
   - Body Parameters:
 
-| Field       | Description                | Type   | Allow Null | Allowed Values              |
-| ----------- | -------------------------- | ------ | ---------- | --------------------------- |
-| periodicity | periodicity of rule        | STRING | False      | 'daily', 'weekly', 'unique' |
-| intervals   | interval of rule           | JSON   | False      | { "start": "", "end": ""}   |
-| date        | date of rule in ISO format | STRING | TRUE       | any date in ISO format      |
-| days        | days of week of rule       | ARRAY  | TRUE       | [0, 1, 2, 3, 4, 5, 6]       |
+  | Field       | Description                | Type   | Allow Null | Allowed Values              |
+  | ----------- | -------------------------- | ------ | ---------- | --------------------------- |
+  | periodicity | periodicity of rule        | STRING | False      | 'daily', 'weekly', 'unique' |
+  | intervals   | interval of rule           | JSON   | False      | { "start": "", "end": ""}   |
+  | date        | date of rule in ISO format | STRING | TRUE       | any date in ISO format      |
+  | days        | days of week of rule       | ARRAY  | TRUE       | [0, 1, 2, 3, 4, 5, 6]       |
 
-- Request example:
-  - Creates DAILY availability in the interval defined
+  - Example: Creates DAILY availability in the interval defined
+
   ```javascript
   {
     "periodicity": "daily",
@@ -67,7 +68,9 @@ yarn test
     }
   }
   ```
-  - Creates WEEKLY availability in the interval defined. The days were maped as follow: 0 - Sunday, 1 - Monday, ..., 6 - Saturday
+
+  - Example: Creates WEEKLY availability in the interval defined. The days were maped as follow: 0 - Sunday, 1 - Monday, ..., 6 - Saturday
+
   ```javascript
   {
     "periodicity": "weekly",
@@ -78,7 +81,9 @@ yarn test
     "days": [1,3,5]
   }
   ```
-  - Creates UNIQUE availability in the interval and date defined
+
+  - Example: Creates UNIQUE availability in the interval and date defined
+
   ```javascript
   {
     "periodicity": "unique",
@@ -89,10 +94,11 @@ yarn test
     }
   }
   ```
-- Response:
-  - Status 200 - Recently created rule
-  - Status 400 - Bad Request
-  - Status 409 - Conflict - Given interval conflicts with another interval already created
+
+  - Response:
+    - Status 200 - Recently created rule
+    - Status 400 - Bad Request
+    - Status 409 - Conflict - Given interval conflicts with another interval already created
 - `DELETE /rules/:id`:
   - Description: Deletes an availability rule based on the id passed via route parameter
   - Response:
