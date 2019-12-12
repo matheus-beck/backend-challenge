@@ -1,6 +1,6 @@
 # Backend Challenge
 
-REST API developed using Node.js for the tech backend challenge from a company
+REST API developed using Node.js and Typescript for the tech backend challenge from a company
 
 ## Dependencies Used
 
