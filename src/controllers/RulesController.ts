@@ -5,9 +5,7 @@ import { RulesInterface } from '../interfaces/Rules'
 
 class RulesController {
   public async index (req: Request, res: Response): Promise<Response> {
-    const rawdata = fs.readFileSync('src/database/availability-rules.json')
-
-    const rules = JSON.parse(rawdata.toString())
+    const rules = JSON.parse(fs.readFileSync('src/database/availability-rules.json').toString())
 
     return res.json(rules)
   }
@@ -44,38 +42,40 @@ class RulesController {
     }
 
     // Check if given interval conflicts with another interval
-    const rawdata = fs.readFileSync('src/database/availability-rules.json')
-
-    const rules = JSON.parse(rawdata.toString())
+    const rules = JSON.parse(fs.readFileSync('src/database/availability-rules.json').toString())
 
     for (const index in rules) {
-      const startHourDatabaseArray = rules[index].intervals.start.split(':')
-      const startHourDatabase = parseFloat(startHourDatabaseArray[0] + '.' + startHourDatabaseArray[1])
+      const startHourDatabase = parseFloat(
+        rules[index].intervals.start.split(':')[0] + '.' + rules[index].intervals.start.split(':')[1]
+      )
 
-      const endHourDatabaseArray = rules[index].intervals.end.split(':')
-      const endHourDatabase = parseFloat(endHourDatabaseArray[0] + '.' + endHourDatabaseArray[1])
+      const endHourDatabase = parseFloat(
+        rules[index].intervals.end.split(':')[0] + '.' + rules[index].intervals.end.split(':')[1]
+      )
 
-      const startHourBodyArray = intervals.start.split(':')
-      const startHourBody = parseFloat(startHourBodyArray[0] + '.' + startHourBodyArray[1])
+      const startHourBody = parseFloat(
+        intervals.start.split(':')[0] + '.' + intervals.start.split(':')[1]
+      )
 
-      const endHourBodyArray = intervals.end.split(':')
-      const endHourBody = parseFloat(endHourBodyArray[0] + '.' + endHourBodyArray[1])
+      const endHourBody = parseFloat(
+        intervals.end.split(':')[0] + '.' + intervals.end.split(':')[1]
+      )
 
       if ((startHourDatabase <= endHourBody && endHourDatabase >= endHourBody) ||
           (startHourDatabase <= startHourBody && endHourDatabase >= endHourBody) ||
           (startHourBody <= endHourDatabase && endHourDatabase <= endHourBody)) {
-        return res.status(409).json({ error: '409 - Conflict - Given interval conflicts with another interval already created' })
+        return res.status(409).json({
+          error: '409 - Conflict - Given interval conflicts with another interval already created'
+        })
       }
     }
 
-    const indexArray = Object.keys(rules)
-    const lastIndex = Object.keys(rules).length === 0 ? 0 : indexArray[indexArray.length - 1]
+    const lastIndex = Object.keys(rules).length === 0 ? 0 : Object.keys(rules)[Object.keys(rules).length - 1]
 
     // Creates register in database (.json file)
     rules[+lastIndex + 1] = rule
 
-    const data = JSON.stringify(rules)
-    fs.writeFileSync('src/database/availability-rules.json', data)
+    fs.writeFileSync('src/database/availability-rules.json', JSON.stringify(rules))
 
     return res.json(rule)
   }
@@ -83,9 +83,7 @@ class RulesController {
   public async delete (req: Request, res: Response): Promise<Response> {
     const id = req.params.id
 
-    const rawdata = fs.readFileSync('src/database/availability-rules.json')
-
-    const rules = JSON.parse(rawdata.toString())
+    const rules = JSON.parse(fs.readFileSync('src/database/availability-rules.json').toString())
 
     // Check if rule id exists
     if (!rules[id]) {
@@ -94,8 +92,7 @@ class RulesController {
 
     delete rules[id]
 
-    const data = JSON.stringify(rules)
-    fs.writeFileSync('src/database/availability-rules.json', data)
+    fs.writeFileSync('src/database/availability-rules.json', JSON.stringify(rules))
 
     return res.json(rules)
   }

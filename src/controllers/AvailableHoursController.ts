@@ -15,11 +15,10 @@ class AvailableHoursController {
 
     const { startDate } = req.body
     const { endDate } = req.body
+
     const totalDays = differenceInCalendarDays(parseISO(endDate), parseISO(startDate))
 
-    const rawdata = fs.readFileSync('src/database/availability-rules.json')
-
-    const rules = JSON.parse(rawdata.toString())
+    const rules = JSON.parse(fs.readFileSync('src/database/availability-rules.json').toString())
 
     for (const index in rules) {
       const startHour = rules[index].intervals.start
