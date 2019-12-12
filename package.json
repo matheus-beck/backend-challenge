@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "date-fns": "^2.8.1",
