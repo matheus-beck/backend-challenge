@@ -1,6 +1,6 @@
-# Cubos Backend Challenge
+# Backend Challenge
 
-REST API developed using Node.js for the tech backend challenge from Cubos Tecnologia
+REST API developed using Node.js for the tech backend challenge from a company
 
 ## Dependencies Used
 
@@ -19,7 +19,7 @@ REST API developed using Node.js for the tech backend challenge from Cubos Tecno
 
 ## Getting Started
 
-1. Clone the project into your machine and install all dependencies inside the `cubos-desafio-backend` folder using:
+1. Clone the project into your machine and install all dependencies inside the `backend-challenge` folder using:
 
 ```console
 yarn install
